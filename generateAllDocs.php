@@ -32,11 +32,9 @@ if ($fetch == true) {
     $baseUrl = 'https://api4.linc-ed.com';
 
 
-    $HERO_CLIENT_ID = "966adad3-4bf9-45d3-b816-e2664ca4258d";
-    $HERO_CLIENT_SECRET = "x-FHRia1_xrxXHBE-lje3HOsxxwPzwmWh87L3zUr9QrkDwMLmO";
     $provider = new \League\OAuth2\Client\Provider\HeroProvider([
-        'clientId' => $HERO_CLIENT_ID,    // The client ID assigned to you by the provider
-        'clientSecret' => $HERO_CLIENT_SECRET,   // The client password assigned to you by the provider
+        'clientId' => $_ENV['UK_DEV_HERO_CLIENT_ID'],    // The client ID assigned to you by the provider
+        'clientSecret' =>  $_ENV['UK_DEV_HERO_CLIENT_SECRET'],   // The client password assigned to you by the provider
         'urlAccessToken' => 'https://uk-dev-id.linc-ed.com/oauth/token',
         'devMode' => true
     ]);

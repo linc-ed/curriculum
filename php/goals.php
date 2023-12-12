@@ -175,7 +175,7 @@ class GoalSubject
                                             $goalsByFullTermAndWeek[$fq['fullTerm']][$fq['weekLabel']][$goal['id']] = $goal;
                                             $goalsByTermAndWeekNumber[$catLabel][$fq['fullTerm']][$fq['weekNumber']][$goal['id']] = $goal;
                                             $goalsByHalfTermAndWeekNumber[$this->subjectLabel][$catLabel.' '.$fq['halfTerm']][$goal['subHeading']][$goal['subcategoryLabel']][$goal['id']] = $goal;
-                                            $goalsByHalfTerm[$catLabel][$fq['halfTerm']][$goal['id']] = $goal;
+                                            $goalsByHalfTerm[$catLabel][$fq['halfTerm']][$fq['educatorDescription']][] = $goal;
                                             $goalsByFullTermAndWeekNumber[$catLabel][$fq['fullTerm']][$this->subjectLabel][$fq['weekNumber']][$goal['id']] = $goal;
                                             $goalsByFullTermAndWeekNumberAndSubcat[$catLabel][$fq['fullTerm']][$this->subjectLabel][$fq['weekNumber']][$goal['subcategoryLabel']][$goal['id']] = $goal;
 

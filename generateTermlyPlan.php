@@ -47,11 +47,9 @@ if ($fetch == true) {
     ]);
     $baseUrl = 'https://api4.linc-ed.com';*/
 
-    $HERO_CLIENT_ID = "966adad3-4bf9-45d3-b816-e2664ca4258d";
-    $HERO_CLIENT_SECRET = "x-FHRia1_xrxXHBE-lje3HOsxxwPzwmWh87L3zUr9QrkDwMLmO";
     $provider = new \League\OAuth2\Client\Provider\HeroProvider([
-        'clientId' => $HERO_CLIENT_ID,    // The client ID assigned to you by the provider
-        'clientSecret' => $HERO_CLIENT_SECRET,   // The client password assigned to you by the provider
+        'clientId' => $_ENV['UK_DEV_HERO_CLIENT_ID'],    // The client ID assigned to you by the provider
+        'clientSecret' =>  $_ENV['UK_DEV_HERO_CLIENT_SECRET'],   // The client password assigned to you by the provider
         'urlAccessToken' => 'https://uk-dev-id.linc-ed.com/oauth/token',
         'devMode' => true
     ]);
@@ -73,6 +71,7 @@ if ($fetch == true) {
         $thisYear = date('Y');
         // Initiate each request but do not block
         $promises = [
+            'school' => $client->getAsync('/schools/v4/schools/'.$schoolId),
             'subjects' => $client->getAsync('/goals/v4/subjects'),
             'categories' => $client->getAsync('/goals/v4/categories'),
             'subcategories' => $client->getAsync('/goals/v4/subcategories'),
@@ -88,6 +87,7 @@ if ($fetch == true) {
             $filePath = 'json/'. $schoolId . '/' . $key . '.json';
             file_put_contents($filePath, $json[$key]);
         }
+        $schoolOptions = $data['school']['school']['options'];
 
         $students = array();
         foreach ($data['people']['people'] as $person){
@@ -129,23 +129,22 @@ if ($fetch == true) {
         $groupName = 'Year 3';
         $QRData = array();
         if (isset($mergedTargets['goalsByHalfTerm'][$groupName][$termLabel])) {
-            foreach ($mergedTargets['goalsByHalfTerm'][$groupName][$termLabel] as $target) {
-                $targetId = $target['id'];
-                $QRData[trim($target['educatorDescription'])]['goalId'] = $targetId;
-                $allGoals[trim($target['educatorDescription'])] = $targetId;
+            print_r($mergedTargets['goalsByHalfTerm'][$groupName][$termLabel]);
+            foreach ($mergedTargets['goalsByHalfTerm'][$groupName][$termLabel] as $topic=>$topics) {
+
+                foreach ($topics as $target) {
+                    $targetId = $target['id'];
+                    $QRData[trim($target['educatorDescription'])]['goalId'] = $targetId;
+                    $allGoals[$topic][trim($target['educatorDescription'])] = $targetId;
+                }
             }
         }
 
-        if (isset($mergedTargets['goalsByHalfTerm'][$groupName][$termLabel])) {
-            foreach ($mergedTargets['goalsByHalfTerm'][$groupName][$termLabel] as $target) {
-
-        }
-        }
         $allData['data'] = $data;
         $allData['allGoals'] = $allGoals;
         $allData['students'] = $students;
-
-       generatePlan($allData, $groupId, $schoolId, $QRData, $termLabel, true);
+        $allData['schoolOptions'] = $data['school']['school']['options'];
+        generatePlan($allData, $groupId, $schoolId, $QRData, $termLabel, true);
 
     } catch (GuzzleHttp\Exception\ClientException $e) {
         // Failed to get the access token or user details.
@@ -155,6 +154,7 @@ if ($fetch == true) {
     }
 } else {
     $dirPath = 'json/' .$schoolId;
+    $data['school'] =json_decode( file_get_contents($dirPath.'/school.json'),'ARRAY_A');
     $data['subjects'] =json_decode( file_get_contents($dirPath.'/subjects.json'),'ARRAY_A');
     $data['categories'] = json_decode(file_get_contents($dirPath.'/categories.json'),'ARRAY_A');
     $data['subcategories'] = json_decode(file_get_contents($dirPath.'/subcategories.json'),'ARRAY_A');
@@ -164,6 +164,8 @@ if ($fetch == true) {
     $allData['data'] = $data;
     $allData['allGoals'] = array();
     $allGoals['students'] = array();
+    $allData['schoolOptions'] = $data['school']['options'];
+
     generatePlan($allData, $groupId, $schoolId, $QRData= false, $termLabel, false);
 }
 
@@ -175,11 +177,23 @@ function generatePlan($allData, $groupId, $schoolId, $QRData, $termLabel, $liveD
     $data = $allData['data'];
     $allGoals = $allData['allGoals'];
     $students = $allData['students'];
+    $schoolOptions = $allData['schoolOptions'];
     $group = $data['groups']['group'];
     $groupName = $group['name'];
+    $progressLanguage = array();
+    $colours = array();
+    $colours[1] = $schoolOptions['progress:colours:first']['valueString'];
+    $colours[2] = $schoolOptions['progress:colours:second']['valueString'];
+    $colours[3] = $schoolOptions['progress:colours:third']['valueString'];
+    $colours[4] = $schoolOptions['progress:colours:fourth']['valueString'];
+    $colours[5] = $schoolOptions['progress:colours:fifth']['valueString'];
+    $progressLanguage[1] = $schoolOptions['progress:strings:wellBelow']['valueString'];
+    $progressLanguage[2] = $schoolOptions['progress:strings:below']['valueString'];
+    $progressLanguage[3] = $schoolOptions['progress:strings:at']['valueString'];
+    $progressLanguage[4] = $schoolOptions['progress:strings:above']['valueString'];
+    $progressLanguage[5] = $schoolOptions['progress:strings:wellAbove']['valueString'];
 
-
-    if ($liveData == false) {
+    /*if ($liveData == false) {
         foreach ($data['subjects']['subjects'] as $subject) {
             $subjectId = $subject['id'];
             $isATopic = false;
@@ -220,8 +234,8 @@ function generatePlan($allData, $groupId, $schoolId, $QRData, $termLabel, $liveD
                 $QRData[$target['educatorDescription']]['goalId'] = $targetId;
             }
         }
-    }
-//print_r($QRData);
+    }*/
+
     $docx = new CreateDocx();
 
     $paramsTable = array(
@@ -233,68 +247,87 @@ function generatePlan($allData, $groupId, $schoolId, $QRData, $termLabel, $liveD
     );
 
 
-
     $docx->addHeading($termLabel);
     $docx->addText( $groupName.' Planning');
-    foreach ($allGoals as $targetHeading=>$studentRecords){
-        $grade1Section = new WordFragment($docx);
-        //$headingSection->addText($targetHeading);
-        $QRD = $QRData[$targetHeading];
-        $QRD['grade'] = 2;
-        $QRJson = json_encode($QRD);
-        $html =  '<img src="'.(new QRCode)->render($QRJson).'" alt="QR Code" />';
-        $grade1Section->embedHTML($html);
-        $grade1Section->addText('Working below expected');
-        $grade2Section = new WordFragment($docx);
-        $QRD['grade'] = 3;
-        $QRJson = json_encode($QRD);
-        $html =  '<img src="'.(new QRCode)->render($QRJson).'" alt="QR Code" />';
-        $grade2Section->embedHTML($html);
-        $grade2Section->addText('At expectation');
-        $grade3Section = new WordFragment($docx);
-        $QRD['grade'] = 4;
-        $QRJson = json_encode($QRD);
-        $html =  '<img src="'.(new QRCode)->render($QRJson).'" alt="QR Code" />';
-        $grade3Section->embedHTML($html);
-        $grade3Section->addText('Above expectation');
+    foreach ($allGoals as $targetHeading=>$questionGoals) {
+            $docx->addHeading($targetHeading);
+        foreach ($questionGoals as $targetHeading => $records) {
+            $goalHeading = new WordFragment($docx);
+            $goalHeading->addText($targetHeading);
+            $row[1][1] = array(
+                'value' => $goalHeading,
+                'colspan' => 9,
+                'valign' => 'center',
+                'border' => 'none'
+            );
+            $row[2][1] = array(
+                'value' => '',
+                'colspan' => 9,
+                'valign' => 'center',
+                'border' => 'none'
+            );
+            $gap = 2;
+            $col = 1;
+            $QRrow = 3;
+            $gradeRow = 4;
+            foreach ($progressLanguage as $i => $lang) {
+                $qrSection = new WordFragment($docx);
+                $gradeSection = new WordFragment($docx);
+                $QRD = $QRData[$targetHeading];
+                $QRD['grade'] = $i;
+                $QRD['action'] = 'goalGrade';
+                $QRJson = json_encode($QRD);
+                $html = '<img src="' . (new QRCode)->render($QRJson) . '" alt="QR Code"  style="width:100px" />';
+                $qrSection->embedHTML($html);
+                $gradeSection->addText($lang);
+                $row[$QRrow][$col] = array(
+                    'value' => $qrSection,
+                    'colspan' => 1,
+                    'valign' => 'center',
+                    'border' => 'none',
+                    'cellMargin' => 200,
+                    'backgroundColor' => $colours[$i]
+                );
+                $row[$QRrow][$gap] = array(
+                    'value' => '',
+                    'colspan' => 1,
+                    'border' => 'none',
+                    'valign' => 'center'
+                );
+                $row[$gradeRow][$col] = array(
+                    'value' => $gradeSection,
+                    'colspan' => 1,
+                    'valign' => 'center',
+                    'border' => 'none',
+                    'cellMargin' => 200,
+                    'backgroundColor' => $colours[$i]
+                );
+                $row[$gradeRow][$gap] = array(
+                    'value' => '',
+                    'colspan' => 1,
+                    'border' => 'none',
+                    'valign' => 'center'
+                );
+                $gap += 2;
+                $col += 2;
+            }
 
-        $row[1][1] = array(
-            'value' => $targetHeading,
-            'colspan' => 3,
-            'valign' => 'center',
-        );
-        $row[2][1] = array(
-            'value' => $grade1Section,
-            'colspan' => 1,
-            'valign' => 'center',
-            'backgroundColor' => '01667d'
-        );
-        $row[2][2] = array(
-            'value' => $grade2Section,
-            'colspan' => 1,
-            'valign' => 'center',
-            'backgroundColor' => 'f9da78'
-        );
-        $row[2][3] = array(
-            'value' => $grade3Section,
-            'colspan' => 1,
-            'valign' => 'center',
-            'backgroundColor' => '01667d'
-        );
+            $values = array(
+                array($row[1][1]),
+                array($row[2][1]),
+                array($row[3][1], $row[3][2], $row[3][3], $row[3][4], $row[3][5], $row[3][6], $row[3][7], $row[3][8], $row[3][9], $row[3][10]),
+                array($row[4][1], $row[4][2], $row[4][3], $row[4][4], $row[4][5], $row[4][6], $row[4][7], $row[4][8], $row[4][9], $row[4][10])
+            );
 
-        $values = array(
-            array($row[1][1]),
-            array($row[2][1], $row[2][2], $row[2][3]),
-        );
-
-        $docx->addTable($values, $paramsTable);
-    };
-
+            $docx->addTable($values, $paramsTable);
+        };
+        $docx->addBreak(array('type'=>'page'));
+    }
 
     $fileName = $groupName.' Planning '.$termLabel.'.docx';
     $docx->createDocx('docx/'.$schoolId.'/Plans/'.$fileName);
 
-    $docx = new CreateDocx();
+   /* $docx = new CreateDocx();
 
     $paramsTable = array(
         'border' => 'single',
@@ -330,7 +363,7 @@ function generatePlan($allData, $groupId, $schoolId, $QRData, $termLabel, $liveD
     }
 
     $fileName = $groupName.' Students '.$termLabel.'.docx';
-    $docx->createDocx('docx/'.$schoolId.'/Plans/'.$fileName);
+    $docx->createDocx('docx/'.$schoolId.'/Plans/'.$fileName);*/
 
 }
 ?>
