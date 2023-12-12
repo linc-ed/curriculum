@@ -1,0 +1,85 @@
+[
+  {
+    "id": "1ee72b6b-4a12-48ec-835e-3bf409dc0857",
+    "createTime": 1689049588,
+    "updateTime": 1700666889,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "label": "Promise"
+  },
+  {
+    "id": "34b375f4-aeea-4f13-a4ac-7806c802cffc",
+    "createTime": 1700154634,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "label": "History",
+    "visibleToTeachers": true,
+    "visibleToParents": true,
+    "visibleToLearners": true
+  },
+  {
+    "id": "76046b6b-160a-4975-af3c-f2828e9fb4e1",
+    "createTime": 1689034046,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "label": "Early Years Foundation Stage Framework",
+    "visibleToTeachers": true,
+    "visibleToParents": true,
+    "visibleToLearners": true,
+    "showRadialDials": true
+  },
+  {
+    "id": "7f98abbf-aa00-4f59-9660-284065ad670c",
+    "createTime": 1699984102,
+    "updateTime": 1700031518,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "label": "Year 3 - Planning",
+    "description": "A hidden set of goals that is used for Curriculum Documentation."
+  },
+  {
+    "id": "acc4d758-388e-47b7-98c6-e85bf7e52514",
+    "createTime": 1699558708,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "label": "Design and Technology",
+    "visibleToTeachers": true,
+    "visibleToParents": true,
+    "visibleToLearners": true,
+    "showRadialDials": true
+  },
+  {
+    "id": "f27294ba-90a4-4b85-b6f6-19d21751442a",
+    "createTime": 1688700506,
+    "updateTime": 1688702515,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "templateId": "7fccbf3d-e286-4cf4-9e32-1d2e884c3a1c",
+    "label": "Reading",
+    "trackable": true,
+    "visibleToTeachers": true,
+    "visibleToParents": true,
+    "visibleToLearners": true,
+    "showRadialDials": true
+  },
+  {
+    "id": "bf90601c-ab45-4001-8134-13b976664928",
+    "createTime": 1688700014,
+    "updateTime": 1689607780,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "templateId": "b2b5af2d-d319-4b53-83c4-795b457776bf",
+    "label": "Number",
+    "trackable": true,
+    "visibleToTeachers": true,
+    "visibleToParents": true,
+    "visibleToLearners": true,
+    "showRadialDials": true
+  },
+  {
+    "id": "0c08608d-f835-450a-a7f9-2f3156352c9f",
+    "createTime": 1688700478,
+    "updateTime": 1689037354,
+    "schoolId": "195e8754-04be-476f-b689-98a65b2af739",
+    "templateId": "e10336cf-478b-4585-b5c9-27b2a7ba8769",
+    "label": "Writing",
+    "trackable": true,
+    "visibleToTeachers": true,
+    "visibleToParents": true,
+    "visibleToLearners": true,
+    "showRadialDials": true
+  }
+]

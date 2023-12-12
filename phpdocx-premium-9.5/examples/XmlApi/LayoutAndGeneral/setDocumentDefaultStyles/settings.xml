@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pdx:document xmlns:pdx="http://www.phpdocx.com/main" >
+    <pdx:settings>
+        <pdx:setDocumentDefaultStyles>
+            <pdx:backgroundColor pdx:value="CCCCCC" />
+            <pdx:color pdx:value="ff0000" />
+            <pdx:fontSize pdx:value="14" />
+            <pdx:pageBreakBefore pdx:value="true" />
+            <pdx:spacingBottom pdx:value="10" />
+            <pdx:spacingTop pdx:value="10" />
+            <pdx:textAlign pdx:value="right" />
+            <pdx:underline pdx:value="dash" />
+        </pdx:setDocumentDefaultStyles>
+    </pdx:settings>
+</pdx:document>

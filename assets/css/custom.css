@@ -1,0 +1,238 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+
+.hero-one { background: #01667d !important; color: white !important;}
+.hero-two { background: #03A6A7 !important;}
+.hero-three { background: #55578D !important; color: white !important;}
+.hero-four {background: #fdb521 !important;}
+.hero-five {background: #aed3d5 !important;}
+.hero-white {color: #01667d}
+.hero-one-text {color: #16657c}
+.hero-four-text {color: #fdb521}
+.hero-two-text {color: #03A6A7}
+.hero-three-text {color: #55578D}
+.hero-five-text {color: #d52027}
+.hero-five-actual-text {color: #aed3d5}
+.hero-six-text {color:white}
+.hero-six {background: #03A6A7}
+.hero-one-text-inverse {color: white !important}
+.hero-two-text-inverse {color: white !important}
+.hero-three-text-inverse {color: white !important}
+.hero-four-text-inverse {color: white !important}
+.hero-five-text-inverse {color: black !important}
+.btn-clean {background: transparent;}
+.ui-autocomplete-loading { background:url('/assets/img/loader.gif') no-repeat right center }
+.autocomplete-loading { background:url('/assets/img/loader.gif') no-repeat right center }
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+.timeline::before {background: #01667d !important;}
+.timeline-item::before {border: 2px solid #01667d !important;}
+.timeline-current.timeline-item::before {background:  #01667d !important;}
+.timeline-previous.timeline-item::before {border: 1px dotted gray !important; background:lightgrey !important;}
+
+.stages {position:relative;list-style:none;padding:1rem 0;margin:0}
+.stages-item {height: 20px; width:20px; border:solid 1px black;
+    float: left;
+}
+.stages-current.stages-item {background:  #08a742 !important;}
+.stages-previous.stages-item {border: 1px dotted gray !important; background:#08a742 !important;}
+.arrow-steps .step {
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+    cursor: default;
+    margin: 3px 3px;
+    padding: 4px 10px 7px 30px;
+    min-width: 20px;
+    float: left;
+    position: relative;
+    background-color: #b4e7ff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+.arrow-steps .step:after,
+.arrow-steps .step:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: -17px;
+    width: 0;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-bottom: 17px solid transparent;
+    border-left: 17px solid #b4e7ff;
+    z-index: 2;
+    transition: border-color 0.2s ease;
+}
+.arrow-steps .step:before {
+    right: auto;
+    left: 0;
+    border-left: 17px solid #fff;
+    z-index: 0;
+}
+.arrow-steps .step:first-child:before {
+    border: none;
+}
+.arrow-steps .step:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.arrow-steps .step span {
+    position: relative;
+}
+.arrow-steps .step span:before {
+    opacity: 0;
+    content: "✔";
+    position: absolute;
+    top: -2px;
+    left: -20px;
+    color: #06ac77;
+}
+.arrow-steps .step.done span:before {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s ease 0.5s;
+    -moz-transition: opacity 0.3s ease 0.5s;
+    -ms-transition: opacity 0.3s ease 0.5s;
+    transition: opacity 0.3s ease 0.5s;
+}
+.arrow-steps .step.current {
+    color: #fff;
+    background-color: #03A6A7;
+}
+.arrow-steps .step.current:after {
+    border-left: 17px solid #03A6A7;
+}
+.tab-content h2 {margin-bottom: 3em;}
+
+.logo-dark, .logo-light {max-height: 45px;}
+
+.package.card {
+    padding: 40px;
+}
+.hail-inline > figure > img {
+     object-fit: cover;
+    width:100px;
+    height: 100px;
+}
+
+.step-icon-last::before {
+    border-left: none !important;
+}
+
+@media only screen and (max-width:480px){
+    .dropdown-menu{
+        display: block !important;
+        position: static !important;
+        margin-top:0 !important;
+        width:100%;
+    }
+    .nav.dropdown-menu > li > a,
+    .nav.dropdown-menu .dropdown-header {
+        padding:5px 15px 5px 25px;
+    }
+    .nav.dropdown-menu > li > a{
+        line-height:20px;
+    }
+    .navbar-default .nav .dropdown-menu > li > a{
+        color:#777;
+    }
+}
+
+figcaption { display: none;}
+
+.nav-tabs-outline .nav-link.active { background: #01667d; color: white !important;}
+
+.scroll-top {left: 30px !important;}
+
+.footer {
+    border-top:0px !important;
+}
+    .phone { float:left;
+        width: 135px;
+        height: 270px;
+        border-radius: 1em;
+        -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,.21);
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.21);
+        border: #01667d;
+        margin: 10px 10px 10px 10px;
+        overflow: hidden;
+    }
+    a.phone {
+        margin: 10px !important;
+    }
+    .phone.lg {
+        float: left;
+        width: 300px;
+        height: 600px;
+    }
+.phone > p {font-size: 1em !important;}
+.phone > h2 {font-size: 1em;}
+.phone.lg > h2 {font-size: 1.7em;}
+.navbar-left > a > img
+{
+    position: absolute;
+    right: 45px;
+    top: 10px;
+}
+@media (min-width: 800px) {
+    .phone { float:left;
+        width: 135px;
+        height: 270px;
+        border-radius: 1em;
+        -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,.21);
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.21);
+        border: #01667d;
+        margin: 100px 50px 10px 10px;
+        overflow: hidden;
+    }
+    a.phone {
+        margin: 10px !important;
+    }
+    .phone > p {font-size: 0.9em;}
+    .phone > h2 {font-size: 1em;}
+    .phone.lg > h2 {font-size: 1.7em;}
+
+
+}
+.custom-file-label-uploaded {
+    position: absolute;
+    left:0;
+    top:0;
+}
+
+
+@media (min-width: 1200px) {
+
+    .navbar-left > a > img
+    {
+        position: relative;
+
+    }
+}
+a.phone:hover {
+    background: #aed3d5; color: white !important;
+}
+.phone:hover > h2 {
+    color: #01667d !important;
+}
+.phone-speaker { border: #e2e6e9 solid 5px; width:50px;
+    height: 0px; border-radius: 4px; margin: 9px auto 0 auto;
+}
+
+.accordion .card-title a::before {
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+}
+
+.header-img {
+
+}

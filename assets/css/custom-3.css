@@ -1,0 +1,17 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+
+.hero-one { background: #16657c; color: white !important;}
+.hero-two { background: #77cfe8}
+.hero-three { background: #56c4ba}
+.hero-four {background: #2599d5}
+
+.hero-one-text {color: #16657c}
+.hero-two-text {color: #77cfe8}
+.hero-three-text {color: #56c4ba}
+.hero-four-text {color: #2599d5}
+
+.tab-content h2 {margin-bottom: 3em;}
+
+.logo-dark {max-height: 65px;}

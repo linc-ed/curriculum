@@ -1,0 +1,8 @@
+{
+    "require": {
+        "league/oauth2-client": "^2.6",
+        "vlucas/phpdotenv": "^5.5",
+        "chillerlan/php-qrcode": "^4.3",
+        "phpoffice/phpspreadsheet": "^1.29"
+    }
+}
